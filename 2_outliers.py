@@ -10,8 +10,11 @@ from pathlib import Path
 import argparse
 
 # Set up file names and locations.
-FOLDER_PATH = Path('./intermediate_datafiles/motor_imagery/step1_result')
-RESULT_PATH = Path('./intermediate_datafiles/motor_imagery/step2_result')
+#FOLDER_PATH = Path('./intermediate_datafiles/motor_imagery/step1_result')
+#RESULT_PATH = Path('./intermediate_datafiles/motor_imagery/step2_result')
+
+FOLDER_PATH = Path('./intermediate_datafiles/mental_states/step1_result')
+RESULT_PATH = Path('./intermediate_datafiles/mental_states/step2_result')
 
 def print_flags():
     """
@@ -33,7 +36,8 @@ def main():
     # all methods, except 'final', are for experimentation
     # for those, we choose random features for the expertiments to inspect
     outlier_columns = ['Delta_TP9', 'Beta_AF7']
-    example_filename = "./intermediate_datafiles/motor_imagery/step1_result/med_2021-08-26--21-03-58_7419762883904244960.csv"
+    #example_filename = "./intermediate_datafiles/motor_imagery/step1_result/med_2021-08-26--21-03-58_7419762883904244960.csv"
+    example_filename = "./intermediate_datafiles/motor_imagery/step1_result/med_2021-07-07--12-36-23_4031631162162162619.csv"
     example_dataset = pd.read_csv(example_filename, index_col=0)
     example_dataset.index = pd.to_datetime(example_dataset.index)
 

@@ -20,7 +20,7 @@ class PrincipalComponentAnalysis:
     def apply_pca(self, data_table, cols, number_comp):
         # Normalize the data first.
         dt_norm = util.normalize_dataset(data_table, cols)
-
+        dt_norm = dt_norm.fillna(value = 0)
         # perform the PCA.
         self.pca = PCA(n_components = number_comp)
         self.pca.fit(dt_norm[cols])
@@ -43,7 +43,7 @@ class IndependentComponentAnalysis:
     def apply_ica(self, data_table, cols):
         # Normalize the data first.
         dt_norm = util.normalize_dataset(data_table, cols)
-
+        dt_norm = dt_norm.fillna(value = 0)
         # perform the FastICA for all components.
         self.ica = FastICA(n_components = len(cols))
         self.ica.fit(dt_norm[cols])

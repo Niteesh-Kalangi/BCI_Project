@@ -7,8 +7,10 @@ import os
 import sys
 
 # directory paths for the current experiment (change it if needed)
-FOLDER_PATH = Path('./datasets/motor_imagery/')
-RESULT_PATH = Path('./intermediate_datafiles/motor_imagery/step1_result/')
+#FOLDER_PATH = Path('./datasets/motor_imagery/')
+#RESULT_PATH = Path('./intermediate_datafiles/motor_imagery/step1_result/')
+FOLDER_PATH = Path('./datasets/mental_states/')
+RESULT_PATH = Path('./intermediate_datafiles/mental_states/step1_result/')
 RESULT_PATH.mkdir(exist_ok=True, parents=True)
 GRANULARITY = 100 #milisecond per instance; we settle at 100 ms.
 

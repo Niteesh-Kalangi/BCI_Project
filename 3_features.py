@@ -14,8 +14,11 @@ from Step_3_feature_engineering.FrequencyAbstraction import FourierTransformatio
 from util.VisualizeDataset import VisualizeDataset
 
 # Set up file names and locations.
-FOLDER_PATH = Path('./intermediate_datafiles/motor_imagery/step2_result')
-RESULT_PATH = Path('./intermediate_datafiles/motor_imagery/step3_result')
+#FOLDER_PATH = Path('./intermediate_datafiles/motor_imagery/step2_result')
+#RESULT_PATH = Path('./intermediate_datafiles/motor_imagery/step3_result')
+
+FOLDER_PATH = Path('./intermediate_datafiles/mental_states/step2_result')
+RESULT_PATH = Path('./intermediate_datafiles/mental_states/step3_result')
 
 def print_flags():
     """
@@ -37,7 +40,8 @@ def main():
     FreqAbs = FourierTransformation()
 
     # initialize example dataset stuff for experimenting
-    example_filename = "./intermediate_datafiles/motor_imagery/step2_result/med_2021-08-26--21-03-58_7419762883904244960.csv"
+    #example_filename = "./intermediate_datafiles/motor_imagery/step2_result/med_2021-08-26--21-03-58_7419762883904244960.csv"
+    example_filename = "./intermediate_datafiles/mental_states/step2_result/med_2021-07-07--12-36-23_4031631162162162619.csv"
     example_dataset = pd.read_csv(example_filename, index_col=0)
     example_dataset.index = pd.to_datetime(example_dataset.index)
 

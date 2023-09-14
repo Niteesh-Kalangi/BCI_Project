@@ -9,8 +9,10 @@ from util import util
 from util.VisualizeDataset import VisualizeDataset
 
 # Set up file names and locations.
-FOLDER_PATH = Path('./intermediate_datafiles/motor_imagery/step3_result')
-RESULT_PATH = Path('./intermediate_datafiles/motor_imagery/step4_result')
+#FOLDER_PATH = Path('./intermediate_datafiles/motor_imagery/step3_result')
+#RESULT_PATH = Path('./intermediate_datafiles/motor_imagery/step4_result')
+FOLDER_PATH = Path('./intermediate_datafiles/mental_states/step3_result')
+RESULT_PATH = Path('./intermediate_datafiles/mental_states/step4_result')
 
 
 def main():
@@ -48,6 +50,7 @@ def main():
     print('Training set length is: ', len(train_X.index))
     print('Validation set length is: ', len(val_X.index))
     print('Test set length is: ', len(test_X.index))   
+    print("here1")
 
     # select subsets of features which we will consider:
     pca_features = ['pca_1','pca_2','pca_3','pca_4']
@@ -56,7 +59,7 @@ def main():
     time_features = [name for name in dataset.columns if '_temp_' in name]
     freq_features = [name for name in dataset.columns if (('_freq' in name) or ('_pse' in name))]
 
-
+    print("here2")
     # feature selection below we will use as input for our models:
     basic_features = ['Delta_TP9','Delta_AF7','Delta_AF8','Delta_TP10','Theta_TP9','Theta_AF7','Theta_AF8','Theta_TP10','Alpha_TP9','Alpha_AF7',
     'Alpha_AF8','Alpha_TP10','Beta_TP9','Beta_AF7','Beta_AF8','Beta_TP10','Gamma_TP9','Gamma_AF7','Gamma_AF8','Gamma_TP10']
@@ -93,12 +96,13 @@ def main():
     feature_names = ['initial set', 'basic_w_PCA', 'basic_w_ICA', 'all_features', 'Selected features']
     N_KCV_REPEATS = 10 # some non deterministic models we will run a couple of times as their inits are random to get average results
 
-
+    print("here3")
     # then here, we run each model
     learner = ClassificationAlgorithms()
     eval = ClassificationEvaluation()
     scores_over_all_algs = []
-    '''
+    
+    """
     for i in range(0, len(possible_feature_sets)):
 
         selected_train_X = train_X[possible_feature_sets[i]]
@@ -113,6 +117,7 @@ def main():
 
         # first the non deterministic models for which we average over 5 runs
         for repeat in range(0, N_KCV_REPEATS):
+            
             print("Training NeuralNetwork run {} / {} ... ".format(repeat+1, N_KCV_REPEATS, feature_names[i]))
             class_train_y, class_val_y, class_train_prob_y, class_val_prob_y = learner.feedforward_neural_network(
                 selected_train_X, train_y, selected_val_X, gridsearch=False
@@ -189,18 +194,19 @@ def main():
         scores_over_all_algs.append(scores_with_sd)
 
     DataViz.plot_performances_classification(['NN', 'RF','SVM', 'KNN', 'DT', 'NB', 'LDA'], feature_names, scores_over_all_algs)
+    """
     # we plot validation results together with their std
-    '''
 
     # and then we chose the 1 or 2 best ones to apply gridsearch etc
     # from my initial results, RF with all features seems to perform best!
     # lets try it with the validation set and gridsearch = True.
     # eventually if we are happy with the best one, and we save that by setting save_model=True for later use with the real time predictions part!
-    #print(test_y)
-    #print(train_X)
+    print(test_y)
+    print(train_X)
     class_train_y, class_test_y, class_train_prob_y, class_test_prob_y = learner.random_forest(
-                train_X, train_y, test_X, gridsearch=True, print_model_details=True, save_model=True
-            )
+            train_X[all_features], train_y, test_X[all_features], gridsearch=True
+        )
+    print("here4")
     performance_training_rf_final = eval.f1(train_y, class_train_y)
     performance_test_rf_final = eval.f1(test_y, class_test_y)
     confusionmatrix_rf_final = eval.confusion_matrix(test_y, class_test_y, ['label_left', 'label_right', 'undefined'])

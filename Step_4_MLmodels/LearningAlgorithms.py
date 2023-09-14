@@ -32,6 +32,8 @@ class ClassificationAlgorithms:
             nn = MLPClassifier(hidden_layer_sizes=hidden_layer_sizes, activation=activation, max_iter=max_iter, learning_rate=learning_rate, alpha=alpha, random_state=42)
 
         # Fit the model
+        train_X = train_X.fillna(value = 0)
+        train_y = train_y.fillna(value = 0)
         nn.fit(train_X, train_y.values.ravel())
 
         if gridsearch and print_model_details:
@@ -64,6 +66,8 @@ class ClassificationAlgorithms:
         else:
             lda = LinearDiscriminantAnalysis()
 
+        train_X = train_X.fillna(value = 0)
+        train_y = train_y.fillna(value = 0)
         # Fit the model
         lda.fit(train_X, train_y.values.ravel())
 
@@ -94,7 +98,8 @@ class ClassificationAlgorithms:
             svm = GridSearchCV(SVC(probability=True), tuned_parameters, cv=5, scoring='accuracy')
         else:
             svm = SVC(C=C, kernel=kernel, gamma=gamma, probability=True, cache_size=7000)
-
+        train_X = train_X.fillna(value = 0)
+        train_y = train_y.fillna(value = 0)
         # Fit the model
         svm.fit(train_X, train_y.values.ravel())
 
@@ -131,7 +136,8 @@ class ClassificationAlgorithms:
             svm = GridSearchCV(LinearSVC(), tuned_parameters, cv=5, scoring='accuracy')
         else:
             svm = LinearSVC(C=C, tol=tol, max_iter=max_iter)
-
+        train_X = train_X.fillna(value = 0)
+        train_y = train_y.fillna(value = 0)
         # Fit the model
         svm.fit(train_X, train_y.values.ravel())
 
@@ -168,7 +174,8 @@ class ClassificationAlgorithms:
             knn = GridSearchCV(KNeighborsClassifier(), tuned_parameters, cv=5, scoring='accuracy')
         else:
             knn = KNeighborsClassifier(n_neighbors=n_neighbors)
-
+        train_X = train_X.fillna(value = 0)
+        train_y = train_y.fillna(value = 0)
         # Fit the model
         knn.fit(train_X, train_y.values.ravel())
 
@@ -205,7 +212,8 @@ class ClassificationAlgorithms:
             dtree = GridSearchCV(DecisionTreeClassifier(), tuned_parameters, cv=5, scoring='accuracy')
         else:
             dtree = DecisionTreeClassifier(min_samples_leaf=min_samples_leaf, criterion=criterion)
-
+        train_X = train_X.fillna(value = 0)
+        train_y = train_y.fillna(value = 0)
         # Fit the model
         dtree.fit(train_X, train_y.values.ravel())
 
@@ -249,6 +257,10 @@ class ClassificationAlgorithms:
         nb = GaussianNB()
         
         train_y = train_y.values.ravel()
+        #train_X = train_X.fillna(value = 0)
+        #train_y = train_y.fillna(value = 0)
+        train_X = np.nan_to_num(train_X)
+        train_y = np.nan_to_num(train_y)
         # Fit the model
         nb.fit(train_X, train_y)
 
@@ -282,7 +294,8 @@ class ClassificationAlgorithms:
             rf = RandomForestClassifier(n_estimators=n_estimators, min_samples_leaf=min_samples_leaf, criterion=criterion)
 
         # Fit the model
-
+        train_X = train_X.fillna(value = 0)
+        train_y = train_y.fillna(value = 0)
         rf.fit(train_X, train_y.values.ravel())
 
         if gridsearch and print_model_details:
